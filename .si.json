@@ -5,6 +5,22 @@
     ".html": {
       "enabled": true,
       "run": "vscode-html-language-server --stdio"
+    },
+    ".sh": {
+      "enabled": true,
+      "run": "bash-language-server start"
+    },
+    ".css": {
+      "enabled": true,
+      "run": "vscode-css-language-server --stdio"
+    },
+    ".json": {
+      "enabled": true,
+      "run": "vscode-json-language-server --stdio"
+    },
+    ".js": {
+      "enabled": true,
+      "run": "typescript-language-server --stdio"
     }
   }
 }
