@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aibalac WebStore - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo">Aibalac WebStore</div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active-link">Home</a></li>
+      <li><a href="download.html">Download</a></li>
+      <li><a href="info.html">Info</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="section">
+      <h1>Welcome to Aibalac WebStore</h1>
+      <p>Discover top-rated Android games, modded titles, and productivity apps.</p>
+    </section>
+
+    <!-- FEATURED SECTION -->
+    <section class="section" style="padding-top: 0;">
+      <h2 style="margin-bottom: 0.5rem;">🔥 Featured Games & Apps</h2>
+      <p>Hand-picked top titles available for instant APK & OBB download.</p>
+
+      <div class="store-grid">
+        <!-- FEATURED GAME ITEM 1 -->
+        <div class="card" 
+             data-title="NBA 2K27"
+             data-type="Game"
+             data-image="images/nba2k27.jpg"
+             data-desc="*WHAT'S NEW:* \n * UPDATED ROSTER ~v1.0~ \n * PBA ROSTER \n * ANKLE BREAKER"
+             data-version="v1.0"
+             data-size="100.64 MB"
+             data-obb="games/nba2k20/nba2k27.zip"
+             data-obbsize="2.95 GB"
+             data-developer="Aibalac Studios"
+             data-requirements="Android 8.0 or higher"
+             data-download="games/nba2k20/NBA2K27.apk">
+          
+          <img src="images/nba2k27.png" alt="NBA 2K27" class="card-img">
+          
+          <div class="card-body">
+            <span class="badge">Featured Game</span>
+            <h3 class="card-title">NBA 2K27</h3>
+            <p class="card-desc">Modded 2K20 MOBILE V98 with updated rosters.</p>
+            <button class="view-btn">View Details & Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINK TO FULL DOWNLOAD CATALOG -->
+      <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="download.html" class="download-btn" style="display: inline-block; width: auto; padding: 0.8rem 2.5rem;">
+          View All Games & Apps →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL POPUP FOR FEATURED ITEMS -->
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <span class="close-btn" id="modalClose">&times;</span>
+      <img id="modalImg" src="" alt="Preview" class="modal-img">
+      <div class="modal-header">
+        <span id="modalBadge" class="badge">Category</span>
+        <h2 id="modalTitle">Title</h2>
+      </div>
+
+      <p id="modalDesc" class="modal-desc"></p>
+
+      <div class="modal-specs">
+        <p><strong>Version:</strong> <span id="modalVersion">-</span></p>
+        <p><strong>APK Size:</strong> <span id="modalSize">-</span></p>
+        <p id="modalObbSizeRow" style="display: none;"><strong>OBB Size:</strong> <span id="modalObbSize">-</span></p>
+        <p><strong>Developer:</strong> <span id="modalDeveloper">-</span></p>
+        <p><strong>Requirements:</strong> <span id="modalReqs">-</span></p>
+      </div>
+
+      <div class="modal-download-group">
+        <a href="#" id="modalDownloadLink" class="download-btn" download>Download APK</a>
+        <a href="#" id="modalObbLink" class="download-btn obb-btn" download>Download OBB Data</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
