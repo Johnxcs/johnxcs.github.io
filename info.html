@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aibalac WebStore - Info</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Aibalac Devz - Info</title>
+  <link rel="stylesheet" href="style.css?v=2.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
   <nav class="navbar">
-    <div class="logo">Aibalac WebStore</div>
+    <div class="logo">Aibalac Devz</div>
     <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
       <span class="bar"></span>
       <span class="bar"></span>
@@ -22,23 +23,45 @@
     </ul>
   </nav>
 
-  <main>
-    <section class="section">
+  <main class="section">
       <h2>Information & Guides</h2>
-      <p>Learn how to install APK and OBB files on your Android device.</p>
-
-      <div class="modal-specs" style="max-width: 800px; margin: 0 auto; text-align: left;">
-        <h3 style="margin-bottom: 1rem;">How to Install APK + OBB Games</h3>
-        <ol style="padding-left: 1.2rem; line-height: 1.8;">
-          <li>Download the <strong>APK</strong> and <strong>OBB Data</strong> files from the download page.</li>
-          <li>Install the APK file (Allow installation from Unknown Sources if prompted).</li>
-          <li>Extract the downloaded OBB <code>.zip</code> file using ZArchiver or File Manager.</li>
-          <li>Move the extracted folder into: <code>Internal Storage / Android / obb /</code></li>
-          <li>Launch the game and enjoy!</li>
-        </ol>
+      <p class="section-subtitle">Learn how to install files, set up tools, and optimize performance.</p>
+      <!-- Tutorials Container Grid -->
+      <div class="guides-grid">
+          <!-- Card 1: APK + OBB Installation -->
+          <article class="guide-card">
+              <div class="guide-badge">Installation</div>
+              <h3>How to Install APK + OBB Games</h3>
+              <ol class="guide-list">
+                  <li>Download the <strong>APK</strong> and <strong>OBB Data</strong> files from the download page.</li>
+                  <li>Install the APK file <em>(Allow installation from Unknown Sources if prompted)</em>.</li>
+                  <li>Extract the downloaded OBB <code>.zip</code> file using ZArchiver or File Manager.</li>
+                  <li>Move the extracted folder into: <code>Internal Storage / Android / obb /</code></li>
+                  <li>Launch the game and enjoy!</li>
+              </ol>
+          </article>
+          <!-- Card 2: Template for Your Future Tutorial -->
+          <article class="guide-card">
+              <div class="guide-badge">Coming Soon</div>
+              <h3>How to Download Files</h3>
+              <p class="guide-desc">Soon.</p>
+          </article>
       </div>
-    </section>
   </main>
+  
+  <div class="info-card social-card">
+      <h2>Connect with Us</h2>
+      <div class="social-grid">
+          <a href="https://t.me/aibalacdvz" target="_blank" rel="noopener noreferrer" class="social-btn telegram" style="text-decoration: none !important;">
+              <i class="fab fa-telegram-plane" style="text-decoration: none !important;"></i>
+              <span style="text-decoration: none !important;">Telegram</span>
+          </a>
+          <a href="https://discord.gg/yourinvite" target="_blank" rel="noopener noreferrer" class="social-btn discord" style="text-decoration: none !important;">
+              <i class="fab fa-discord" style="text-decoration: none !important;"></i>
+              <span style="text-decoration: none !important;">Discord</span>
+          </a>
+      </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
