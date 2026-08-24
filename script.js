@@ -43,9 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
-      if (modalImg) modalImg.src = card.dataset.image;
-      if (modalTitle) modalTitle.textContent = card.dataset.title;
-      if (modalBadge) modalBadge.textContent = card.dataset.type;
+      if (modalImg) modalImg.src = card.dataset.image || '';
+      if (modalTitle) modalTitle.textContent = card.dataset.title || 'Title';
+      if (modalBadge) modalBadge.textContent = card.dataset.type || 'Category';
 
       if (modalDesc) {
         let formattedDesc = card.dataset.desc || '';
@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
         modalDesc.innerHTML = formattedDesc;
       }
 
-      if (modalVersion) modalVersion.textContent = card.dataset.version;
-      if (modalDeveloper) modalDeveloper.textContent = card.dataset.developer;
-      if (modalReqs) modalReqs.textContent = card.dataset.requirements;
+      if (modalVersion) modalVersion.textContent = card.dataset.version || '-';
+      if (modalDeveloper) modalDeveloper.textContent = card.dataset.developer || '-';
+      if (modalReqs) modalReqs.textContent = card.dataset.requirements || '-';
 
       // --- Separate APK Size vs File Size Logic ---
       if (card.dataset.apksize) {
@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalFileSizeRow) modalFileSizeRow.style.display = 'block';
         if (modalApkSizeRow) modalApkSizeRow.style.display = 'none';
       } else if (card.dataset.size) {
-        // Fallback for older cards using data-size
         if (modalApkSize) modalApkSize.textContent = card.dataset.size;
         if (modalApkSizeRow) modalApkSizeRow.style.display = 'block';
         if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
@@ -78,37 +77,73 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
       }
 
-      // Handle APK / Main Download Link
+      // --- NO FILE / NO LINK LOGIC FOR MAIN DOWNLOAD ---
+      const downloadPath = card.dataset.download;
       if (modalDownloadLink) {
-        modalDownloadLink.href = card.dataset.download;
-        modalDownloadLink.setAttribute('download', card.dataset.title + '.apk');
+        if (downloadPath && downloadPath.trim() !== '' && downloadPath !== '#') {
+          modalDownloadLink.style.display = 'inline-block';
+          modalDownloadLink.href = downloadPath;
+          modalDownloadLink.textContent = card.dataset.type === 'ROM' ? 'Download ROM' : 'Download File';
+          modalDownloadLink.removeAttribute('disabled');
+          modalDownloadLink.style.pointerEvents = 'auto';
+          modalDownloadLink.style.opacity = '1';
+          if (card.dataset.title) {
+            modalDownloadLink.setAttribute('download', card.dataset.title);
+          }
+        } else {
+          // Action when file is missing: Change text and disable button
+          modalDownloadLink.style.display = 'inline-block';
+          modalDownloadLink.href = '#';
+          modalDownloadLink.textContent = 'Unavailable / Coming Soon';
+          modalDownloadLink.style.pointerEvents = 'none';
+          modalDownloadLink.style.opacity = '0.5';
+          modalDownloadLink.removeAttribute('download');
+        }
       }
 
-      // Handle OBB Link and OBB Size Visibility
-      if (card.dataset.obb) {
+      // --- NO FILE / NO LINK LOGIC FOR OBB DATA ---
+      const obbPath = card.dataset.obb;
+      if (obbPath && obbPath.trim() !== '' && obbPath !== '#') {
         if (modalObbSize) modalObbSize.textContent = card.dataset.obbsize || 'N/A';
         if (modalObbSizeRow) modalObbSizeRow.style.display = 'block';
 
         if (modalObbLink) {
-          modalObbLink.style.display = 'block';
-          modalObbLink.href = card.dataset.obb;
+          modalObbLink.style.display = 'inline-block';
+          modalObbLink.href = obbPath;
           modalObbLink.textContent = `Download OBB Data (${card.dataset.obbsize || 'OBB'})`;
-          modalObbLink.setAttribute('download', card.dataset.title + '.obb');
+          if (card.dataset.title) {
+            modalObbLink.setAttribute('download', card.dataset.title + '.obb');
+          }
         }
       } else {
+        // Hide OBB components completely if no valid link exists
         if (modalObbSizeRow) modalObbSizeRow.style.display = 'none';
         if (modalObbLink) modalObbLink.style.display = 'none';
       }
 
-      if (modal) modal.classList.add('active');
+      // Show Modal
+      if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+      }
     });
   });
 
+  // --- Close Modal Logic ---
+  const closeModal = () => {
+    if (modal) {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 300);
+    }
+  };
+
   if (modalClose) {
-    modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    modalClose.addEventListener('click', closeModal);
   }
 
   window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('active');
+    if (e.target === modal) closeModal();
   });
 });
