@@ -27,9 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
   const modalVersion = document.getElementById('modalVersion');
-  const modalSize = document.getElementById('modalSize');
-  const modalObbSize = document.getElementById('modalObbSize');         // Target OBB Size span
-  const modalObbSizeRow = document.getElementById('modalObbSizeRow');   // Target OBB Size row
+
+  // Size targets
+  const modalApkSize = document.getElementById('modalApkSize');
+  const modalApkSizeRow = document.getElementById('modalApkSizeRow');
+  const modalFileSize = document.getElementById('modalFileSize');
+  const modalFileSizeRow = document.getElementById('modalFileSizeRow');
+  
+  const modalObbSize = document.getElementById('modalObbSize');
+  const modalObbSizeRow = document.getElementById('modalObbSizeRow');
   const modalDeveloper = document.getElementById('modalDeveloper');
   const modalReqs = document.getElementById('modalReqs');
   const modalDownloadLink = document.getElementById('modalDownloadLink');
@@ -42,24 +48,37 @@ document.addEventListener('DOMContentLoaded', () => {
       if (modalBadge) modalBadge.textContent = card.dataset.type;
 
       if (modalDesc) {
-        let formattedDesc = card.dataset.desc;
-        // 1. Convert *text* into <b>text</b> for bold words
+        let formattedDesc = card.dataset.desc || '';
         formattedDesc = formattedDesc.replace(/\*(.*?)\*/g, '<b>$1</b>');
-        // 2. Convert \n into <br> for line breaks
         formattedDesc = formattedDesc.replace(/\\n/g, '<br>');
-        // 3. Convert ~text~ into <small>text</small> for small words
         formattedDesc = formattedDesc.replace(/~(.*?)~/g, '<small>$1</small>');
-
-        // Insert rendered HTML into modal
         modalDesc.innerHTML = formattedDesc;
       }
 
       if (modalVersion) modalVersion.textContent = card.dataset.version;
-      if (modalSize) modalSize.textContent = card.dataset.size;
       if (modalDeveloper) modalDeveloper.textContent = card.dataset.developer;
       if (modalReqs) modalReqs.textContent = card.dataset.requirements;
 
-      // Handle APK Link
+      // --- Separate APK Size vs File Size Logic ---
+      if (card.dataset.apksize) {
+        if (modalApkSize) modalApkSize.textContent = card.dataset.apksize;
+        if (modalApkSizeRow) modalApkSizeRow.style.display = 'block';
+        if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
+      } else if (card.dataset.filesize) {
+        if (modalFileSize) modalFileSize.textContent = card.dataset.filesize;
+        if (modalFileSizeRow) modalFileSizeRow.style.display = 'block';
+        if (modalApkSizeRow) modalApkSizeRow.style.display = 'none';
+      } else if (card.dataset.size) {
+        // Fallback for older cards using data-size
+        if (modalApkSize) modalApkSize.textContent = card.dataset.size;
+        if (modalApkSizeRow) modalApkSizeRow.style.display = 'block';
+        if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
+      } else {
+        if (modalApkSizeRow) modalApkSizeRow.style.display = 'none';
+        if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
+      }
+
+      // Handle APK / Main Download Link
       if (modalDownloadLink) {
         modalDownloadLink.href = card.dataset.download;
         modalDownloadLink.setAttribute('download', card.dataset.title + '.apk');
@@ -67,11 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Handle OBB Link and OBB Size Visibility
       if (card.dataset.obb) {
-        // Show OBB row in specs
         if (modalObbSize) modalObbSize.textContent = card.dataset.obbsize || 'N/A';
         if (modalObbSizeRow) modalObbSizeRow.style.display = 'block';
 
-        // Show OBB Download Button
         if (modalObbLink) {
           modalObbLink.style.display = 'block';
           modalObbLink.href = card.dataset.obb;
@@ -79,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
           modalObbLink.setAttribute('download', card.dataset.title + '.obb');
         }
       } else {
-        // Hide OBB row and button if game doesn't have OBB
         if (modalObbSizeRow) modalObbSizeRow.style.display = 'none';
         if (modalObbLink) modalObbLink.style.display = 'none';
       }
