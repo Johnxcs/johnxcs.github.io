@@ -77,13 +77,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalFileSizeRow) modalFileSizeRow.style.display = 'none';
       }
 
-      // --- NO FILE / NO LINK LOGIC FOR MAIN DOWNLOAD ---
+      // --- Download APK / Download ROM Label Logic ---
       const downloadPath = card.dataset.download;
+      const itemType = (card.dataset.type || '').toUpperCase();
+
       if (modalDownloadLink) {
         if (downloadPath && downloadPath.trim() !== '' && downloadPath !== '#') {
           modalDownloadLink.style.display = 'inline-block';
           modalDownloadLink.href = downloadPath;
-          modalDownloadLink.textContent = card.dataset.type === 'ROM' ? 'Download ROM' : 'Download File';
+          
+          if (itemType === 'ROM' || itemType === 'ROM GAME') {
+            modalDownloadLink.textContent = 'Download ROM';
+          } else {
+            modalDownloadLink.textContent = 'Download APK';
+          }
+
           modalDownloadLink.removeAttribute('disabled');
           modalDownloadLink.style.pointerEvents = 'auto';
           modalDownloadLink.style.opacity = '1';
@@ -91,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modalDownloadLink.setAttribute('download', card.dataset.title);
           }
         } else {
-          // Action when file is missing: Change text and disable button
           modalDownloadLink.style.display = 'inline-block';
           modalDownloadLink.href = '#';
           modalDownloadLink.textContent = 'Unavailable / Coming Soon';
@@ -101,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // --- NO FILE / NO LINK LOGIC FOR OBB DATA ---
+      // --- OBB Logic ---
       const obbPath = card.dataset.obb;
       if (obbPath && obbPath.trim() !== '' && obbPath !== '#') {
         if (modalObbSize) modalObbSize.textContent = card.dataset.obbsize || 'N/A';
@@ -116,12 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }
       } else {
-        // Hide OBB components completely if no valid link exists
         if (modalObbSizeRow) modalObbSizeRow.style.display = 'none';
         if (modalObbLink) modalObbLink.style.display = 'none';
       }
 
-      // Show Modal
+      // Open Modal
       if (modal) {
         modal.style.display = 'flex';
         setTimeout(() => modal.classList.add('active'), 10);
