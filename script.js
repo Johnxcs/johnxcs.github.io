@@ -36,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const modalObbSize = document.getElementById('modalObbSize');
   const modalObbSizeRow = document.getElementById('modalObbSizeRow');
+
+  // Developer & Modder targets
   const modalDeveloper = document.getElementById('modalDeveloper');
+  const modalModder = document.getElementById('modalModder');
+  const modalModderRow = document.getElementById('modalModderRow');
+
   const modalReqs = document.getElementById('modalReqs');
   const modalDownloadLink = document.getElementById('modalDownloadLink');
   const modalObbLink = document.getElementById('modalObbLink');
@@ -58,6 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (modalVersion) modalVersion.textContent = card.dataset.version || '-';
       if (modalDeveloper) modalDeveloper.textContent = card.dataset.developer || '-';
       if (modalReqs) modalReqs.textContent = card.dataset.requirements || '-';
+
+      // --- Modder vs Developer Logic ---
+      if (card.dataset.modder && card.dataset.modder.trim() !== '') {
+        if (modalModder) modalModder.textContent = card.dataset.modder;
+        if (modalModderRow) modalModderRow.style.display = 'block';
+      } else {
+        if (modalModderRow) modalModderRow.style.display = 'none';
+      }
 
       // --- Separate APK Size vs File Size Logic ---
       if (card.dataset.apksize) {
